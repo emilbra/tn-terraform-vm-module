@@ -32,6 +32,32 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 }
 
+resource "azurerm_windows_virtual_machine" "default" {
+  # Using a ternary to condionally create this windows virtual machine - using the azure_virtual_machine resource is no longer recommended.
+  count = var.operating_system == "windows" ? var.count : null
+
+  # Implementation note here - i prefer interpolation as thats easier to read inline.
+  # Format() may make sense too, but mostly when you need good control and will reuse a lot.
+  # Here i chose to use format for local.base_name, but interpolation for adding  resource specific prefixes
+  name                = "vm-${local.base_name}-${count.index}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  size                  = var.virtual_machine_size
+  network_interface_ids = azurerm_network_interface.default[count.index].id
+
+  # Checkov flagged this. Extension operations are not good practice regardless
+  allow_extension_operations = false
+  os_disk {
+    name                 = "osdisk-${local.base_name}-${count.index}"
+    caching              = "ReadWrite"
+    storage_account_type = var.os_disk_storage_account_type
+  }
+
+  # like the linux vm above, this was also flagged by checkov
+  encryption_at_host_enabled = true
+}
+
 resource "azurerm_network_interface" "default" {
   count               = var.count
   name                = "nic-${local.base_name}-${count.index}"
