@@ -30,6 +30,13 @@ resource "azurerm_linux_virtual_machine" "default" {
     caching              = "ReadWrite"
     storage_account_type = var.os_disk_storage_account_type
   }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
 }
 
 resource "azurerm_windows_virtual_machine" "default" {
