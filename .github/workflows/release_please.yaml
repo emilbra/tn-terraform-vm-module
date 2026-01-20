@@ -26,5 +26,5 @@ jobs:
               # the action does ouput a major tag, just for cases like those :)
             - uses: googleapis/release-please-action@v4
               with:
-                  token: ${{ steps.app_token.outputs.token }}
+                  token: ${{ steps.app-token.outputs.token }}
                   release-type: terraform-module
