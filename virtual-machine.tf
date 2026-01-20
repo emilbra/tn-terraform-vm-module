@@ -54,6 +54,13 @@ resource "azurerm_windows_virtual_machine" "default" {
     storage_account_type = var.os_disk_storage_account_type
   }
 
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
+    version   = "latest"
+  }
+
   # like the linux vm above, this was also flagged by checkov
   encryption_at_host_enabled = true
 }
