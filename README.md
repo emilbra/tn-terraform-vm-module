@@ -16,6 +16,11 @@ module "azure_vm" {
 Where possible, I tend to use the naming standard defined by Azure CAF, as it is recognizable by a lot of engineers out there.
 For variables, I am not that opinonated, but one should avoid abbreviations.
 
+For this module the naming for the resources themselves is like this:
+
+<resource_type>-<location_shorthand>-<project>-<environment>-<running-number>
+For example: vm-neu-myproject-nonprod-01
+
 # Auto-generated Terraform docs
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
