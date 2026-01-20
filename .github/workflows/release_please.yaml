@@ -3,7 +3,7 @@ name: Release-please - Automatic Semver compliant tags 🤖🪧
 on:
     push:
         branches:
-            - main
+            - master
 
 # these are the permissions required for release-please to do its job
 permissions:
