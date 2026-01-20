@@ -26,7 +26,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.57.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.8.0 |
 
 ## Modules
 
@@ -39,13 +40,14 @@ No modules.
 | [azurerm_linux_virtual_machine.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_network_interface.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
 | [azurerm_windows_virtual_machine.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine) | resource |
+| [random_password.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_count"></a> [count](#input\_count) | The number of resources to create | `number` | `1` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment type for the module. | `string` | `"nonprod"` | no |
+| <a name="input_instance_count"></a> [instance\_count](#input\_instance\_count) | The number of resources to create | `number` | `1` | no |
 | <a name="input_location"></a> [location](#input\_location) | What location to use for the Azure Resources | `string` | `"norwayeast"` | no |
 | <a name="input_operating_system"></a> [operating\_system](#input\_operating\_system) | What OS the Virtual Machine will be created with | `string` | `"linux"` | no |
 | <a name="input_os_disk_storage_account_type"></a> [os\_disk\_storage\_account\_type](#input\_os\_disk\_storage\_account\_type) | What Storage Account type that should be backing the operating system disk | `string` | `"Standard_LRS"` | no |

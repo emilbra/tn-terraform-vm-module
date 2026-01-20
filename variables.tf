@@ -13,12 +13,12 @@ variable "project" {
   description = "The name of the project, or team or equivalent these resources should belong to"
   type        = string
   validation {
-    condition     = length([var.project]) >= 12 # just a random number here - we could absolutely make this validation more robust
+    condition     = length([var.project]) <= 12 # just a random number here - we could absolutely make this validation more robust
     error_message = "Max characters reached, project  name should be shorter"
   }
 }
 
-variable "count" {
+variable "instance_count" {
   default     = 1
   description = "The number of resources to create"
   type        = number
@@ -56,7 +56,7 @@ variable "virtual_machine_size" {
   type        = string
   default     = "Standard_B1ls" # the cheapest
   validation {
-    condition     = contains(["Standard_B1ls", "Standard_B1ms"], var.environment)
+    condition     = contains(["Standard_B1ls", "Standard_B1ms"], var.virtual_machine_size)
     error_message = "Size must be in approved list"
   }
 }
@@ -65,7 +65,7 @@ variable "os_disk_storage_account_type" {
   default     = "Standard_LRS"
   description = "What Storage Account type that should be backing the operating system disk"
   validation {
-    condition     = contains(["Standard_LRS", "Premium_ZRS"])
+    condition     = contains(["Standard_LRS", "Premium_ZRS"], var.os_disk_storage_account_type)
     error_message = "Storage account type should be in approved list"
   }
 }
