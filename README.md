@@ -11,6 +11,11 @@ module "azure_vm" {
 }
 ```
 
+## About naming of resources and variables
+
+Where possible, I tend to use the naming standard defined by Azure CAF, as it is recognizable by a lot of engineers out there.
+For variables, I am not that opinonated, but one should avoid abbreviations.
+
 # Auto-generated Terraform docs
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -19,7 +24,9 @@ No requirements.
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
 
 ## Modules
 
@@ -27,13 +34,25 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [azurerm_linux_virtual_machine.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
+| [azurerm_network_interface.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_count"></a> [count](#input\_count) | The number of resources to create | `number` | `1` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | The environment type for the module. | `string` | `"nonprod"` | no |
 | <a name="input_location"></a> [location](#input\_location) | What location to use for the Azure Resources | `string` | `"norwayeast"` | no |
+| <a name="input_operating_system"></a> [operating\_system](#input\_operating\_system) | What OS the Virtual Machine will be created with | `string` | `"linux"` | no |
+| <a name="input_os_disk_storage_account_type"></a> [os\_disk\_storage\_account\_type](#input\_os\_disk\_storage\_account\_type) | What Storage Account type that should be backing the operating system disk | `string` | `"Standard_LRS"` | no |
+| <a name="input_project"></a> [project](#input\_project) | The name of the project, or team or equivalent these resources should belong to | `string` | n/a | yes |
+| <a name="input_public_key"></a> [public\_key](#input\_public\_key) | The Public Key for authenticaton to a Linux machine | `string` | `null` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group to place resources in | `string` | n/a | yes |
+| <a name="input_username"></a> [username](#input\_username) | Username for the virtual Machine | `string` | `"adminuser"` | no |
+| <a name="input_virtual_machine_size"></a> [virtual\_machine\_size](#input\_virtual\_machine\_size) | The size of the Virtual Machine to create | `string` | `"Standard_B1ls"` | no |
 
 ## Outputs
 
