@@ -1,0 +1,30 @@
+name: Release-please - Automatic Semver compliant tags 🤖🪧
+
+on:
+    push:
+        branches:
+            - main
+
+# these are the permissions required for release-please to do its job
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
+jobs:
+    # of course - in scaled orgs, this would be a reusable workflow
+    release-please:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/create-github-app-token@2.2.1
+              id: app-token
+              with:
+                  app-id: ${{ vars.APP_ID }}
+                  private-key: ${{ secrets.APP_PRIVATE_KEY}}
+              # for now - we wont do anything more fancy than the default release-please stuff.
+              # I would recommend in some cases a "rolling major" version to reduce the need to update to really specific tags in low-risk envs
+              # the action does ouput a major tag, just for cases like those :)
+            - uses: googleapis/release-please-action@v4
+              with:
+                  token: ${{ steps.app_token.outputs.token }}
+                  release-type: terraform-module
