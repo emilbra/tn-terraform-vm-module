@@ -8,7 +8,7 @@ locals {
 
 resource "azurerm_linux_virtual_machine" "default" {
   # Using a ternary to condionally create this Linux virtual machine - using the azure_virtual_machine resource is no longer recommended.
-  for_each = var.operating_system == "windows" ? local.instances : {}
+  for_each = var.operating_system == "linux" ? local.instances : {}
 
   # Implementation note here - i prefer interpolation as thats easier to read inline.
   # Format() may make sense too, but mostly when you need good control and will reuse a lot.
