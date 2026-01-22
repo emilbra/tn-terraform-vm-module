@@ -82,7 +82,9 @@ resource "azurerm_windows_virtual_machine" "default" {
   }
 
   # like the linux vm above, this was also flagged by checkov
-  encryption_at_host_enabled = true
+  # its not enabled at my sub, so setting it to false, and skipping check
+  #checkov:skip=CKV_AZURE_151
+  encryption_at_host_enabled = false
 }
 
 # could absolutely make an input object where we can choose subnets, i dont care rn
