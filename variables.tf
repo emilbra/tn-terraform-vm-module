@@ -54,9 +54,9 @@ variable "operating_system" {
 variable "virtual_machine_size" {
   description = "The size of the Virtual Machine to create"
   type        = string
-  default     = "Standard_B1ls" # the cheapest
+  default     = "Standard_B1s" # the cheapest
   validation {
-    condition     = contains(["Standard_B1ls", "Standard_B1ms"], var.virtual_machine_size)
+    condition     = contains(["Standard_B1s", "Standard_B1ms"], var.virtual_machine_size)
     error_message = "Size must be in approved list"
   }
 }

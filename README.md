@@ -61,7 +61,7 @@ No modules.
 | <a name="input_public_key"></a> [public\_key](#input\_public\_key) | The Public Key for authenticaton to a Linux machine | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group to place resources in | `string` | n/a | yes |
 | <a name="input_username"></a> [username](#input\_username) | Username for the virtual Machine | `string` | `"adminuser"` | no |
-| <a name="input_virtual_machine_size"></a> [virtual\_machine\_size](#input\_virtual\_machine\_size) | The size of the Virtual Machine to create | `string` | `"Standard_B1ls"` | no |
+| <a name="input_virtual_machine_size"></a> [virtual\_machine\_size](#input\_virtual\_machine\_size) | The size of the Virtual Machine to create | `string` | `"Standard_B1s"` | no |
 
 ## Outputs
 
