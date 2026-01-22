@@ -64,5 +64,8 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_nic_ips"></a> [nic\_ips](#output\_nic\_ips) | IP addresses for the VMs |
+| <a name="output_vm_ids"></a> [vm\_ids](#output\_vm\_ids) | Identifiers for the VMs |
 <!-- END_TF_DOCS -->
