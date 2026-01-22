@@ -9,7 +9,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   # Implementation note here - i prefer interpolation as thats easier to read inline.
   # Format() may make sense too, but mostly when you need good control and will reuse a lot.
   # Here i chose to use format for local.base_name, but interpolation for adding  resource specific prefixes
-  name                  = "vm-${local.base_name}-${count.index}"
+  name                  = "vm-${substr(local.base_name, 0, 12)}-${count.index}"
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
@@ -56,7 +56,7 @@ resource "azurerm_windows_virtual_machine" "default" {
   # Implementation note here - i prefer interpolation as thats easier to read inline.
   # Format() may make sense too, but mostly when you need good control and will reuse a lot.
   # Here i chose to use format for local.base_name, but interpolation for adding  resource specific prefixes
-  name                  = "vm-${local.base_name}-${count.index}"
+  name                  = "vm-${substr(local.base_name, 0, 12)}-${count.index}"
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
