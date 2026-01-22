@@ -1,19 +1,23 @@
 locals {
   base_name = format("%s-%s-%s", var.location, var.project, var.environment)
+  instances = {
+    for i in range(var.instance_count) :
+    tostring(i) => i
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "default" {
   # Using a ternary to condionally create this Linux virtual machine - using the azure_virtual_machine resource is no longer recommended.
-  count = var.operating_system == "linux" ? var.instance_count : 0
+  for_each = var.operating_system == "windows" ? local.instances : {}
 
   # Implementation note here - i prefer interpolation as thats easier to read inline.
   # Format() may make sense too, but mostly when you need good control and will reuse a lot.
   # Here i chose to use format for local.base_name, but interpolation for adding  resource specific prefixes
-  name                  = "vm-${substr(local.base_name, 0, 12)}-${count.index}"
+  name                  = "vm-${substr(local.base_name, 0, 12)}-${each.key}"
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
-  network_interface_ids = [azurerm_network_interface.default[count.index].id]
+  network_interface_ids = [azurerm_network_interface.default[each.key].id]
   admin_username        = var.username
 
   admin_ssh_key {
@@ -26,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   # Checkov flagged this. Extension operations are not good practice regardless
   allow_extension_operations = false
   os_disk {
-    name                 = "osdisk-${local.base_name}-${count.index}"
+    name                 = "osdisk-${local.base_name}-${each.key}"
     caching              = "ReadWrite"
     storage_account_type = var.os_disk_storage_account_type
   }
@@ -51,22 +55,21 @@ resource "random_password" "password" {
 
 resource "azurerm_windows_virtual_machine" "default" {
   # Using a ternary to condionally create this windows virtual machine - using the azure_virtual_machine resource is no longer recommended.
-  count = var.operating_system == "windows" ? var.instance_count : 0
-
+  for_each = var.operating_system == "windows" ? local.instances : {}
   # Implementation note here - i prefer interpolation as thats easier to read inline.
   # Format() may make sense too, but mostly when you need good control and will reuse a lot.
   # Here i chose to use format for local.base_name, but interpolation for adding  resource specific prefixes
-  name                  = "vm-${substr(local.base_name, 0, 12)}-${count.index}"
+  name                  = "vm-${substr(local.base_name, 0, 12)}-${each.key}"
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
-  network_interface_ids = [azurerm_network_interface.default[count.index].id]
+  network_interface_ids = [azurerm_network_interface.default[each.key].id]
   admin_username        = var.username
-  admin_password        = random_password.password[count.index].result
+  admin_password        = random_password.password[each.key].result
   # Checkov flagged this. Extension operations are not good practice regardless
   allow_extension_operations = false
   os_disk {
-    name                 = "osdisk-${local.base_name}-${count.index}"
+    name                 = "osdisk-${local.base_name}-${each.key}"
     caching              = "ReadWrite"
     storage_account_type = var.os_disk_storage_account_type
   }
@@ -84,12 +87,12 @@ resource "azurerm_windows_virtual_machine" "default" {
 
 # could absolutely make an input object where we can choose subnets, i dont care rn
 resource "azurerm_network_interface" "default" {
-  count               = var.instance_count
-  name                = "nic-${local.base_name}-${count.index}"
+  for_each            = local.instances
+  name                = "nic-${local.base_name}-${each.key}"
   location            = var.location
   resource_group_name = var.resource_group_name
   ip_configuration {
-    name                          = "ipconfig-${local.base_name}-${count.index}"
+    name                          = "ipconfig-${local.base_name}-${each.key}"
     private_ip_address_allocation = "Dynamic"
     private_ip_address_version    = "IPv4"
     subnet_id                     = data.azurerm_subnet.default.id
