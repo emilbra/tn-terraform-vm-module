@@ -70,6 +70,17 @@ variable "os_disk_storage_account_type" {
   }
 }
 
+## Related to virtual_network_name
+
+variable "virtual_network_name" {
+  type        = string
+  description = "Name of Virtual Network to create resources in"
+}
+
+variable "subnet_name" {
+  type        = string
+  description = "Name of subnet to create resources in"
+}
 
 ## Related to Auth
 

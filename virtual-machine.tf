@@ -82,6 +82,7 @@ resource "azurerm_windows_virtual_machine" "default" {
   encryption_at_host_enabled = true
 }
 
+# could absolutely make an input object where we can choose subnets, i dont care rn
 resource "azurerm_network_interface" "default" {
   count               = var.instance_count
   name                = "nic-${local.base_name}-${count.index}"
@@ -89,16 +90,8 @@ resource "azurerm_network_interface" "default" {
   resource_group_name = var.resource_group_name
   ip_configuration {
     name                          = "ipconfig-${local.base_name}-${count.index}"
-    public_ip_address_id          = azurerm_public_ip.default[count.index].id
     private_ip_address_allocation = "Dynamic"
-    private_ip_address_version    = "IPv6"
+    private_ip_address_version    = "IPv4"
+    subnet_id                     = data.azurerm_subnet.default.id
   }
-}
-
-resource "azurerm_public_ip" "default" {
-  count               = var.instance_count
-  name                = "pip-${local.base_name}-${count.index}"
-  location            = var.location
-  allocation_method   = "Static"
-  resource_group_name = var.resource_group_name
 }
