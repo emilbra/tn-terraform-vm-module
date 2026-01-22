@@ -88,8 +88,16 @@ resource "azurerm_network_interface" "default" {
   location            = var.location
   resource_group_name = var.resource_group_name
   ip_configuration {
-    name = "ipconfig-${local.base_name}-${count.index}"
-    # Opionated choice altough i highly doubt youd ever want dynamic
-    private_ip_address_allocation = "Static"
+    name                          = "ipconfig-${local.base_name}-${count.index}"
+    public_ip_address_id          = azurerm_public_ip.default[count.index].id
+    private_ip_address_allocation = "Dynamic"
   }
+}
+
+resource "azurerm_public_ip" "default" {
+  count               = var.instance_count
+  name                = "pip-${local.base_name}-${count.index}"
+  location            = var.location
+  allocation_method   = "Static"
+  resource_group_name = var.resource_group_name
 }
