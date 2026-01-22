@@ -91,6 +91,7 @@ resource "azurerm_network_interface" "default" {
     name                          = "ipconfig-${local.base_name}-${count.index}"
     public_ip_address_id          = azurerm_public_ip.default[count.index].id
     private_ip_address_allocation = "Dynamic"
+    private_ip_address_version    = "IPv6"
   }
 }
 
