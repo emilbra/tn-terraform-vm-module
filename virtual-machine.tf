@@ -13,7 +13,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
-  network_interface_ids = azurerm_network_interface.default[count.index].id
+  network_interface_ids = [azurerm_network_interface.default[count.index].id]
   admin_username        = var.username
 
   admin_ssh_key {
@@ -60,7 +60,7 @@ resource "azurerm_windows_virtual_machine" "default" {
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = var.virtual_machine_size
-  network_interface_ids = azurerm_network_interface.default[count.index].id
+  network_interface_ids = [azurerm_network_interface.default[count.index].id]
   admin_username        = var.username
   admin_password        = random_password.password[count.index].result
   # Checkov flagged this. Extension operations are not good practice regardless
